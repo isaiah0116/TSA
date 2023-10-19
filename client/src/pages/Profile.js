@@ -11,6 +11,7 @@ import ChatbotModal from "../components/chatmodal";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Joyride, { STATUS } from 'react-joyride';
 
 export default function Profile() {
   const [profileData, setProfileData] = useState({});
@@ -31,6 +32,26 @@ export default function Profile() {
   const [profileAnswers, setProfileAnswers] = React.useState([]);
   const [showResults, setShowResults] = React.useState(true);
   const [confirmMessage, setConfirmMessage] = React.useState(false);
+  const [run, setRun] = useState(!localStorage.getItem("tutorialCompleted"));
+
+	const steps = [
+		{
+			target: '#surveyLink',
+			content: 'After you\'ve set up your transition plan, take a quick survey to provide us feedback on the system! Would you like to see any changes made?',
+			beacon: false
+		},
+		// add additional steps as needed
+	];
+
+	const handleJoyrideCallback = (data) => {
+        const { status } = data;
+        const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED];
+    
+        if (finishedStatuses.includes(status)) {
+            setRun(false);
+            localStorage.setItem("tutorialCompleted", "true");
+        }
+    };
 	
 	// // means this only runs when you want to
 	// useEffect(() => {
@@ -381,16 +402,16 @@ export default function Profile() {
                 <h2 class="text-center text-5xl my-6 py-3 font-semibold mb-4">My Career Transition Plan</h2>
                 <hr class="my-4"/>
                 <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
-					<h2 className="font-semibold text-lg">Complete each section and save all responses below when finished. If you need assistance or ideas just ask the TSA chat (located in the bottom right corner).</h2>
+					<h2 className="font-semibold text-lg">Complete each section and submit your responses when finished. If you need assistance or ideas just ask the TSA chat (located in the bottom right corner).</h2>
                 </div>
                 <br/>
                 <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
                 <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
                     <ThemeProvider theme={theme}>
-                        <Button onClick={(e)=> handleSubmit(e)} variant="contained">
-                            Save All Responses
-                        </Button>
-                    </ThemeProvider>
+						<Button id="surveyLink" variant="contained" component="a" href="https://forms.gle/TVaBoPmRtZto1BTAA" target="_blank" rel="noopener noreferrer" style={{marginLeft: "10px"}}>
+							System Survey
+						</Button>
+					</ThemeProvider>
                 </div>
                 </div>
                 <br/>
@@ -691,15 +712,15 @@ export default function Profile() {
             <div>
                 <hr class="my-4"/>
                 <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
-					<h2 className="font-semibold text-lg">Would you like to see any changes made? Give your feedback by completing the system survey below!</h2>
+					<h2 className="font-semibold text-lg">Save all responses below (you can come bakc and change these any time).</h2>
                 </div>
                 <br/>
                 <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
                     <ThemeProvider theme={theme}>
-						<Button variant="contained" component="a" href="https://forms.gle/TVaBoPmRtZto1BTAA" target="_blank" rel="noopener noreferrer" style={{marginLeft: "10px"}}>
-							System Survey
-						</Button>
-					</ThemeProvider>
+                        <Button onClick={(e)=> handleSubmit(e)} variant="contained">
+                            Save All Responses
+                        </Button>
+                    </ThemeProvider>
                 </div>
                 <br/>
                 {confirmMessage ? <div className="text-green-800 mt-6" style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>Reponses have been saved!</div> : <></>}
@@ -721,6 +742,27 @@ export default function Profile() {
                     </div> : <></>
                 }
             </div>
+            <Joyride
+				callback={handleJoyrideCallback}
+				continuous={true}
+				run={run}
+				scrollToFirstStep={false}
+				showProgress={true}
+				showSkipButton={true}
+				steps={steps}
+				styles={{
+					options: {
+						zIndex: 10000,
+					}
+				}}
+				locale={{
+					back: 'Prev',
+					close: 'Close',
+					last: 'Finish',
+					next: 'Next',
+					skip: 'Skip'
+				}}
+			/>
         </div>
     )
 }

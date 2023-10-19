@@ -19,6 +19,8 @@ import userRouter from './server/routes/userRouter.js';
 import quizRouter from './server/routes/quizRouter.js';
 import careerRouter from './server/routes/careerRouter.js';
 import accessCodeRouter from './server/routes/accessCodeRouter.js';
+import paymentRouter from './server/routes/paymentRouter.js';
+import userStoryRouter from './server/routes/userStoryRouter.js';
 
 // heroku shenanigans
 //require("dotenv").config();
@@ -68,9 +70,11 @@ app.use(cors());
 app.use('/api/clusters', clusterRouter);
 app.use('/api/dummy', dummyRouter);
 app.use('/api/user', userRouter);
+app.use('/api/payment', paymentRouter);
 app.use('/api/quiz', quizRouter);
 app.use('/api/career', careerRouter);
 app.use('/api/access_code', accessCodeRouter);
+app.use('/api/stories', userStoryRouter);
 
 // https://stackoverflow.com/questions/49961731/react-router-4-and-express-cannot-get
 // https://stackoverflow.com/questions/51227859/react-router-doesnt-work-on-express-server
@@ -101,34 +105,3 @@ if(process.env.NODE_ENV === "production") {
 //const PORT = '3001';
 //const HOST = '0.0.0.0'
 app.listen(process.env.PORT || '3001', '0.0.0.0');
-
-// OpenAI chatbot route
-/*import { Router } from 'express';
-import axios from 'axios';
-
-const chatbotRouter = Router();
-
-chatbotRouter.post('/message', async (req, res) => {
-  try {
-    const { message } = req.body;
-    const { data } = await axios.post('https://api.openai.com/v1/engines/davinci-codex/completions', {
-      prompt: `Code this: ${message}`,
-      max_tokens: 150,
-      n: 1,
-      stop: ['\n', 'Error:', 'Traceback', '>>>'],
-      temperature: 0.5,
-    }, {
-      headers: {
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
-      }
-    });
-    const { choices } = data;
-    const { text } = choices[0];
-    const code = text.replace(/>>>/g, '').trim();
-    res.status(200).json({ code });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});*/

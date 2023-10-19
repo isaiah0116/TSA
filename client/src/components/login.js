@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
+import { useNavigate } from 'react-router-dom';
 
 //const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -23,6 +24,7 @@ export default function Login(props) {
   const [success, setSuccess] = useState();
   const [loggedIn, setLoggedIn] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   
   useEffect(()=>{
     const logged = localStorage.getItem('token');
@@ -83,6 +85,7 @@ export default function Login(props) {
     //if(loggedIn){
       localStorage.clear();
       window.location.reload(false);
+      //navigate('/');
     //}
     
   }

@@ -77,6 +77,7 @@ export default function NewQuiz(){
 			console.log(data)
 
 		});
+    localStorage.removeItem("tutorialCompleted");
 	}
 
   const navigateToCareers = () => {
@@ -92,7 +93,7 @@ export default function NewQuiz(){
   useEffect(()=> {
 		console.log("hello" , id)
 		const loggedInUser = localStorage.getItem("token")
-		fetch(process.env.REACT_APP_S_HOST + ':' + process.env.REACT_APP_S_PORT + `/api/quiz/get_quiz/64690d150b26c4172345ee3b`, {headers: {'Authorization': 'Bearer ' + loggedInUser}})
+		fetch(process.env.REACT_APP_S_HOST + ':' + process.env.REACT_APP_S_PORT + `/api/quiz/get_quiz/64e51faf19e569cdb1f1b502`, {headers: {'Authorization': 'Bearer ' + loggedInUser}})
 			.then(
 				
 				response =>{

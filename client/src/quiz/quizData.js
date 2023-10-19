@@ -110,11 +110,14 @@ const questions = {
   },
 
   7: {
-    Question: "Do you like making things with your hands?",
+    Question: "On a scale of 1 to 5, how much do you like making things with your hands?",
     Type: "Mult",
     options: [
-      {id: 0, text: "Yes"},
-      {id: 1, text: "No"},
+      {id: 0, text: "1"},
+      {id: 1, text: "2"},
+      {id: 0, text: "3"},
+      {id: 1, text: "4"},
+      {id: 0, text: "5"},
     ],
     picture: imageQ8,
   },
@@ -161,11 +164,14 @@ const questions = {
   },
 
   12: {
-    Question: "Do you like public speaking?",
+    Question: "On a scale of 1 to 5, how much do you like public speaking?",
     Type: "Mult",
     options: [
-      {id: 0, text: "Yes"},
-      {id: 1, text: "No"},
+      {id: 0, text: "1"},
+      {id: 1, text: "2"},
+      {id: 0, text: "3"},
+      {id: 1, text: "4"},
+      {id: 0, text: "5"},
     ],
     picture: imageQ13,
   },
@@ -181,21 +187,27 @@ const questions = {
   },
 
   14: {
-    Question: "In a team setting are you one to take the lead role?",
+    Question: "On a scale of 1 to 5, how likely are you to take the lead role in a team setting?",
     Type: "Mult",
     options: [
-      {id: 0, text: "Yes"},
-      {id: 1, text: "No"},
+      {id: 0, text: "1"},
+      {id: 1, text: "2"},
+      {id: 0, text: "3"},
+      {id: 1, text: "4"},
+      {id: 0, text: "5"},
     ],
     picture: imageQ15,
   },
 
   15: {
-    Question: "Do you like to teach others?",
+    Question: "On a scale of 1 to 5, how much do you like to teach others?",
     Type: "Mult",
     options: [
-      {id: 0, text: "Yes"},
-      {id: 1, text: "No"},
+      {id: 0, text: "1"},
+      {id: 1, text: "2"},
+      {id: 0, text: "3"},
+      {id: 1, text: "4"},
+      {id: 0, text: "5"},
     ],
     picture: imageQ16,
   },
@@ -241,31 +253,40 @@ const questions = {
   },
 
   20: {
-    Question: "Do you like writing?",
+    Question: "On a scale of 1 to 5, how much do you like writing?",
     Type: "Mult",
     options: [
-      {id: 0, text: "Yes"},
-      {id: 1, text: "No"},
+      {id: 0, text: "1"},
+      {id: 1, text: "2"},
+      {id: 0, text: "3"},
+      {id: 1, text: "4"},
+      {id: 0, text: "5"},
     ],
     picture: imageQ21,
   },
 
   21: {
-    Question: "Do you like to be in the spot light?",
+    Question: "On a scale of 1 to 5, how much do you like to be in the spot light?",
     Type: "Mult",
     options: [
-      {id: 0, text: "Yes"},
-      {id: 1, text: "No"},
+      {id: 0, text: "1"},
+      {id: 1, text: "2"},
+      {id: 0, text: "3"},
+      {id: 1, text: "4"},
+      {id: 0, text: "5"},
     ],
     picture: imageQ22,
   },
 
   22: {
-    Question: "Do you consider yourself a creative person?",
+    Question: "On a scale of 1 to 5, how creative do you consider yourself?",
     Type: "Mult",
     options: [
-      {id: 0, text: "Yes"},
-      {id: 1, text: "No"},
+      {id: 0, text: "1"},
+      {id: 1, text: "2"},
+      {id: 0, text: "3"},
+      {id: 1, text: "4"},
+      {id: 0, text: "5"},
     ],
     picture: imageQ23,
   }

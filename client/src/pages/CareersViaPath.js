@@ -1,25 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { HeartIcon, SearchIcon } from "@heroicons/react/outline";
 
 export default function CareersViaPath() {
-    const {pathway} = useParams();
+	let [career] = useState([
+		{
+			url: "UX_Designer",
+			title: "User Experience Designer",
+			desc: "User experience design is the process of supporting user behavior through usability, usefulness, and desirability provided in the interaction with a product",
+			liked: true
+		},
+		{
+			url: "Marketing_Manager",
+			title: "Marketing Manager",
+			desc: "A marketing manager handles the marketing of a business or product. They can be responsible for several services or products, or be in charge of a single paroduct.",
+			liked: false
+		},
+		{
+			url: "Architect",
+			title: "Architect",
+			desc: "An architect plans, designs, and oversees the construction of buildings. To practice architecture means to provide serviecs in connection with the design of buildings and the space within the site surrounding the buildings that have human occupancy or use as their principle purpose.",
+			liked: false
+		}
+	])
 	const [query, setQuery] = useState("")
 	const [careerData, setCareerData] = useState([]);
 	useEffect(()=> {
 
-		fetch(process.env.REACT_APP_S_HOST + ':' + process.env.REACT_APP_S_PORT + `/api/career/get_careers_via_pathways/${pathway}`)
+		fetch(process.env.REACT_APP_S_HOST + ':' + process.env.REACT_APP_S_PORT + '/api/career/get_careers')
 
 			.then(response => response.json())
 			.then(data => {
-				console.log(data)
+				console.log("MindMap: ", data);
 				setCareerData(data);
 			});
 	}, [/* empty sensitivity array means it runs once */]);
 	return (
 		<div className="max-w-4xl mx-auto py-3">
-			<h2 class=" text-center text-5xl font-semibold my-8">Careers</h2>
-			<p className="text-base text-center my-8">Here is where you will find a list of careers within this pathway.</p>
+			<p className="text-base text-center my-8">If your desired career is not listed you can search all careers by clicking here.</p>
 			<div class="flex items-center justify-center">
 				<div class="flex border-2 rounded">
 						<input onChange={ e => setQuery(e.target.value)} value={query} type="text" class="px-3 py-1 w-80" placeholder="Search..."/>
@@ -33,32 +51,24 @@ export default function CareersViaPath() {
 					</div>
 				</div>
 			
-			<ul>
-				{careerData.filter(post => {
-					if (query === '') {
-					return post;
-					} else if (post.name.toLowerCase().includes(query.toLowerCase())) {
-					return post;
-					}
-				}).map((c) => (
-					<li className="hover:bg-gray-200 relative p-3 rounded-md bg-gray-100 my-4 space-y-2 p-7">
-						<h3 className="text-md font-bold leading-5 pb-2">
-							{c.name}
-						</h3>
+				<ul>
+					{query.length > 0 && careerData.filter(post => post.name.toLowerCase().includes(query.toLowerCase())).map((c) => (
+						<li className="hover:bg-gray-200 relative p-3 rounded-md bg-gray-100 my-4 space-y-2 p-7">
+							<h3 className="text-md font-bold leading-5 pb-2">
+								{c.name}
+							</h3>
 
-						<p class="text-sm font-sm text-gray-500 pb-2">{c.description}</p>
+							<p class="text-sm font-sm text-gray-500 pb-2">{c.description}</p>
 
-						<ul className="flex mt-1 space-x-1 text-smfont-normal">
-							{/* <li><HeartIcon class={`h-5 w-5 ${c.liked ? "fill-black" : ""}`}/></li> */}
-							<li class="font-bold text-sm">Learn More</li>
-						</ul>
+							<ul className="flex mt-1 space-x-1 text-smfont-normal">
+								{/* <li><HeartIcon class={`h-5 w-5 ${c.liked ? "fill-black" : ""}`}/></li> */}
+								<li class="font-bold text-sm">Learn More</li>
+							</ul>
 
-						<a href={`/careers/${c._id}`} className='absolute inset-0 rounded-md focus:z-10 focus:outline-none focus:ring-2 ring-blue-400'/>
-					</li>
-				))
-				
-				}
-			</ul>
+							<a href={`careers/${c._id}`} className='absolute inset-0 rounded-md focus:z-10 focus:outline-none focus:ring-2 ring-blue-400'/>
+						</li>
+					))}
+				</ul>
 		</div>
 	)
 }

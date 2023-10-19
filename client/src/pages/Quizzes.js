@@ -6,7 +6,8 @@ import { useNavigate, Navigate } from "react-router-dom";
 import Login from "../components/login";
 //import AccessCode from '..../server/models/accessCodeModel';
 import { color } from "d3";
-import { SitePal } from 'sitepal-react'; 
+import { SitePal } from 'sitepal-react';
+import Joyride, { STATUS } from 'react-joyride';
 
 //import Accesscode from "../components/accesscode";
 //import {checked} from "../components/accesscode";
@@ -16,8 +17,7 @@ function classNames(...classes) {
 
 export default function Quizzes() {
 	let navigate = useNavigate();
-  const loggedInUser = localStorage.getItem("token");
-
+  	const loggedInUser = localStorage.getItem("token");
 
 	const [query, setQuery] = useState("")
 	const [quizData, setQuizData] = useState([]);
@@ -26,6 +26,45 @@ export default function Quizzes() {
 	const [savedQuizzes, setSavedQuizzes] = React.useState([]);
 	const [clusters, setClusters] = useState();
 	const handleOpen = () => setOpen(true);
+	const [run, setRun] = useState(true);
+	const [runSignatureTutorial, setRunSignatureTutorial] = useState(true);
+
+	const steps = [
+		{
+			target: '#inputLink',
+			content: 'Enter the access code that you received from your teacher.',
+			beacon: false
+		},
+		// add additional steps as needed
+	];
+
+    // New steps for the "Take Quiz" tutorial
+    const signatureSteps = [
+        {
+            target: '#takeQuizButton',
+            content: 'You\'re all set to take the quiz...Click here!',
+            beacon: false
+        }
+    ];
+
+	const handleJoyrideCallback = (data) => {
+		const { status } = data;
+		const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED];
+	
+		if (finishedStatuses.includes(status)) {
+			setRun(false);
+		}
+	};
+
+	const handleSignatureJoyrideCallback = (data) => {
+        const { status } = data;
+        const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED];
+
+        if (finishedStatuses.includes(status)) {
+            setRunSignatureTutorial(false);
+        }
+    };
+
 	const handleClose = () => {
 	  setOpen(false);
 	  setClicked(false);
@@ -232,9 +271,13 @@ export default function Quizzes() {
 	}
 	const handleAnswer = (e)=> {setAnswer(e.target.value)}
 	const handleCluster = (e)=> {setCluster(e.target.value)}
+
+	const loggedInUser1 = localStorage.getItem("token");
 	
 	return (
 		<div className="max-w-4xl mx-auto py-3">
+		{loggedInUser1?
+		<div>
     	<h2 class="text-center text-5xl my-6 py-3 font-semibold">Transferable Skills Assessment<sup>TM</sup></h2>
 		{(savedQuizzes.length == 0 && typeof signature != "undefined") ?
     	<>
@@ -376,91 +419,38 @@ export default function Quizzes() {
 				</Box>
 				
 			</Modal>
-			<div className="w-full px-2 py-6 sm:px-0">
-				{/* <Tab.Group>
-					<Tab.List className="flex p-1 space-x-1 rounded-xl">
-						{Object.keys(categories).map((category) => (
-							<Tab
-								key={category}
-								className={({ selected }) =>
-									classNames(
-										'w-full py-2.5 text-sm leading-5 font-medium rounded-lg rounded-sm',
-										'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60',
-										selected ? 'bg-blue-100 text-blue-700' : ' hover:bg-white hover:text-blue-700'
-									)
-								}
-							>
-								{category}
-							</Tab>
-						))}
-					</Tab.List>
-					<Tab.Panels className="mt-2">
-						
-							<Tab.Panel className={classNames('bg-white rounded-xl p-3', 'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60')}>
-								<ul>
-									{quizData.map((q) => (
-										<li key={q.id} className="relative p-6 rounded-md bg-gray-100 my-2">
-											<h3 className="text-md pb-2 font-medium leading-5">
-												{q.name}
-											</h3>
-
-											<ul className="flex mt-1 space-x-1 text-xs font-normal leading-4 text-coolGray-500">
-												<li>10 mins</li>
-											</ul>
-
-											<a href={`quizzes/${q.url}`} className={classNames('absolute inset-0 rounded-md','focus:z-10 focus:outline-none focus:ring-2 ring-blue-400')}/>
-										</li>
-									))}
-								</ul>
-							</Tab.Panel>
-						
-					</Tab.Panels>
-				</Tab.Group> */}
-				<div className="max-w-4xl mx-auto py-3">
-					<div className={`${checked? 'hidden':'block'}`}>
-						<div className="flex items-center justify-center px-4 border-l" style={{ color: "black", height: "100px"}}>
-
-							<h1 
-                className="text-center text-4xl my-6"
-              >Input access code:
-              {/* <input 
-                type="text" 
-                style={{color: "black", outline: true, borderColor: "black", borderWidth: "1px"}}
-                onChange={getCode}
-              /> */}
-              </h1>
-              <p>
-                  <input
-                    class="my-6 mx-3"
-                    type="text" 
-                    style={{color: "black", outline: true, borderColor: "black", borderWidth: "1px"}}
-                    onChange={getCode}
-                  />
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    align="center"
-                    onClick={() => getCheck()}
-								  >
-									Check
-                  </Button>
-              </p>
+			{signature ? ( 
+				<div className="w-full px-2 py-6 sm:px-0">
+					<div className="max-w-4xl mx-auto py-3">
+						<div className={`${checked? 'hidden':'block'}`}>
+							<div className="flex items-center justify-center px-4 border-l" style={{ color: "black", height: "100px"}}>
+								<h1 
+									className="text-center text-4xl my-6"
+									>Input access code:
+								</h1>
+								<p>
+									<input
+										id="inputLink"
+										class="my-6 mx-3"
+										type="text" 
+										style={{color: "black", outline: true, borderColor: "black", borderWidth: "1px"}}
+										onChange={getCode}
+									/>
+									<Button
+										variant="contained"
+										color="primary"
+										size="large"
+										align="center"
+										onClick={() => getCheck()}
+													>
+														Check
+									</Button>
+								</p>
+							</div>
 						</div>
-					</div>
 					<div class="flex text-green-800 justify-center">{checked? 'Correct access code! ' : null} {wrongCode? 'Wrong access code!': null} </div>
 
 						{checked?(<div class="flex items-center justify-center">
-							{/*<div class="flex border-2 rounded">
-								<input onChange={ e => setQuery(e.target.value)} value={query} type="text" class="px-3 py-1 w-80" placeholder="Search..."/>
-								<button class="flex items-center justify-center px-4 border-l">
-									<svg class="w-5 h-5 text-gray-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 24 24">
-										<path
-											d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
-									</svg>
-								</button>
-							</div>*/}
 							<div>
 								<Button
 									variant="contained"
@@ -475,57 +465,95 @@ export default function Quizzes() {
 								</Button>
 							</div>
 						</div>):''}
-							
-						<div>
 					</div>
-					{/* <div>
-						{checked?(
-						quizData.filter(post => {
-							if (query === '') {
-							return post;
-							} else if (post.name.toLowerCase().includes(query.toLowerCase())) {
-							return post;
-							}
-						}).map((q) => (
-							<div className="relative p-3 hover:bg-gray-200 rounded-md bg-gray-100 my-4 space-y-2 p-8">
-								<h3 className="text-md font-bold leading-5 pb-2">
-									{q.name}
-								</h3>
-
-								<ul className="flex mt-1 space-x-1 text-smfont-normal">
-									{// <li><HeartIcon class={`h-5 w-5 ${c.liked ? "fill-black" : ""}`}/></li> }
-									<ul className="flex mt-1 space-x-1 text-xs font-normal leading-4 text-coolGray-500">
-										<li>{q.saved ? "Saved!" : "Not taken yet!"}</li>
-									</ul>
-									
-								</ul>
-								<div className="flex justify-end ">
-
-								</div>
-								<a href={`quizzes/${q._id}`} className='absolute inset-0 rounded-md focus:z-10 focus:outline-none focus:ring-2 ring-blue-400'/>
-								
-								{
-									isAdmin ? <Button onClick={()=>handleDelete(q._id)} size="small" variant="outlined" color="error">Delete</Button> : <></>
-								}
-							</div>
-						))):''
-						}
-					</div> */}
-				</div>
 				
 			</div>
+			) 
+			:
+			(	
+				<div className="w-full px-2 py-6 sm:px-0">
+					<div className="max-w-4xl mx-auto py-3">
+						<div className="flex items-center justify-center px-4 border-l" style={{ color: "black", height: "100px"}}>
+							<Button
+								id="takeQuizButton"
+								variant="contained"
+								size="large"
+								align="center"
+								onClick={() => {
+								console.log(localStorage.getItem('token'));
+								localStorage.getItem('token')? navigate("/quiz"):<Login btnstyle= " bg-gray-700 text-white-400 hover:bg-gray-700 hover:text-white px-3 py-1 rounded-lg text-lg font-large display-inline "/>
+							}}
+							>
+								Take Quiz
+							</Button>
+						</div>
+					</div>
+					{/* New Joyride instance for the "Take Quiz" tutorial */}
+					<Joyride
+						callback={handleSignatureJoyrideCallback}
+						continuous={true}
+						run={runSignatureTutorial}
+						scrollToFirstStep={false}
+						showProgress={true}
+						showSkipButton={true}
+						steps={signatureSteps}
+						styles={{
+							options: {
+								zIndex: 10000,
+							}
+						}}
+						locale={{
+							back: 'Prev',
+							close: 'Close',
+							last: 'Finish',
+							next: 'Next',
+							skip: 'Skip'
+						}}
+					/>
+				</div>
+			)}
+			<Joyride
+				callback={handleJoyrideCallback}
+				continuous={true}
+				run={run}
+				scrollToFirstStep={false}
+				showProgress={true}
+				showSkipButton={true}
+				steps={steps}
+				styles={{
+					options: {
+						zIndex: 10000,
+					}
+				}}
+				locale={{
+					back: 'Prev',
+					close: 'Close',
+					last: 'Finish',
+					next: 'Next',
+					skip: 'Skip'
+				}}
+			/>
       	</>
       	:
       	<>
       	</>
 		}
 		{
-			(savedQuizzes.length != 0 && typeof signature != "undefined") ?
+			(savedQuizzes.length != 0 /*&& typeof signature != "undefined"*/) ?
 				<div class="flex text-green-800 justify-center"><p>You have already completed your assessment.</p></div>
 			:
 			<>
 			</>
 		}
+		</div>
+		: 
+		<>
+		<Navigate to="/" />
+		{/* <h1 className="text-center text-4xl my-10">No one is logged in</h1>
+		<Link className="flex justify-center" to="/">
+			<Button variant="outlined">Back to home</Button>
+		</Link> */}
+		</> }
     </div>
 	)
 }

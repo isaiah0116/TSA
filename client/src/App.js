@@ -11,7 +11,7 @@ import NavBar from "./components/navbar"
 import Home from "./pages/Home";
 // import About from "./pages/About";
 import Quizzes from "./pages/Quizzes";
-import Goals from "./pages/Profile";
+/*import Goals from "./pages/Profile";*/
 import Careers from "./pages/Careers";
 import Career from "./pages/Career";
 import Register from './pages/Register';
@@ -21,6 +21,7 @@ import Stories from './pages/Stories';
 import Clusters from './pages/Clusters';
 import AdminDashboard from './pages/AdminDashboard';
 import CreateCodes from './pages/CreateCodes';
+import Networking from './pages/Networking';
 
 function App() {
   return (
@@ -36,7 +37,7 @@ function App() {
             <Route path="/quizzes" element={<Quizzes/>}/>
             <Route path="/quizzes/:id" element={<Quiz/>}/>
             <Route path="/quiz" element={<NewQuiz/>}/>
-            <Route path="/goals" element={<Goals/>}/>
+            {/*<Route path="/goals" element={<Goals/>}/>*/}
             <Route path="/careers" element={<Clusters/>}/>
             <Route path="/results" element={<Careers/>}/>
             <Route path="/careers/:id" element={<Career/>}/>
@@ -46,6 +47,7 @@ function App() {
             <Route path="/register" element={<Register/>}/>
             <Route path="admin_dashboard" element={<AdminDashboard/>}/>
             <Route path="create_codes" element={<CreateCodes/>}/>
+            <Route path="/networking" element={<Networking/>}/>
           </Routes>
         </div>
         

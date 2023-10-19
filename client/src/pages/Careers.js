@@ -9,6 +9,8 @@ import { SitePal } from 'sitepal-react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Modal from 'react-modal';
 import ChatbotModal from "../components/chatmodal";
+import Joyride, { STATUS } from 'react-joyride';
+import CareersViaPath from "./CareersViaPath";
 
 import Image1 from './clusterImages/image1.png';
 import Image2 from './clusterImages/image2.png';
@@ -51,7 +53,26 @@ export default function Profile() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedGoal, setSelectedGoal] = useState('');
   const [selectedChild, setSelectedChild] = useState('');
+  const [run, setRun] = useState(true);
   const navigate = useNavigate();
+
+	const steps = [
+		{
+			target: '#goalsLink',
+			content: 'Take a moment to view and understand the results from your quiz displayed below. After you\'ve finished, click on this button to fill out your transition plan, which will help us understand your goals and interests!',
+			beacon: false
+		},
+		// add additional steps as needed
+	];
+
+	const handleJoyrideCallback = (data) => {
+		const { status } = data;
+		const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED];
+	
+		if (finishedStatuses.includes(status)) {
+			setRun(false);
+		}
+	};
 
   const imgSRC = (image) => {
 	switch (image) {
@@ -167,7 +188,8 @@ export default function Profile() {
 
 	const navigateToGoals = () => {
 		// 👇️ navigate to /goals
-		navigate('/goals');
+		//navigate('/goals');
+		window.open("https://mindmelders.top/", "_self");
 	};
 	
 	useEffect(() => {
@@ -276,7 +298,7 @@ export default function Profile() {
 	  }, []);
 
 
-	useEffect(() => {
+	/*useEffect(() => {
 
 		//Constants for the SVG
 		var width = 900, height = 700;
@@ -336,7 +358,7 @@ export default function Profile() {
 					});
 					
 		node.append("circle")
-			.attr("fill", d => color(d.data.color) /*d.data.color ? colorArr[d.data.color] : colorArr[0]*/)
+			.attr("fill", d => color(d.data.color))
 			//.attr("stroke", d => d.children ? null : "#fff")
 			.attr("r", 10)
 		
@@ -389,7 +411,7 @@ export default function Profile() {
                     .on("drag", dragged)
                     .on("end", dragended);
         }
-    }, [clusterData]);
+    }, [clusterData]);*/
     
     const loggedInUser1 = localStorage.getItem("token");
 
@@ -448,8 +470,8 @@ export default function Profile() {
 				<div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
 					<h2 className="font-semibold text-lg">After you finish exploring the careers below click to: </h2>
 					<ThemeProvider theme={theme}>
-						<Button onClick={navigateToGoals} variant="contained" style={{marginLeft: "10px"}}>
-							Navigate to Goals
+						<Button id="goalsLink" onClick={navigateToGoals} variant="contained" style={{marginLeft: "10px"}}>
+							Navigate to Transition Plan
 						</Button>
 					</ThemeProvider>
             	</div>
@@ -458,13 +480,13 @@ export default function Profile() {
                 <p>No saved quizzes yet!</p>
                 : <></>/*<SitePal embed='8617581,600,800,"",1,1,2754295,0,1,1,"KcaTn2rsQij64WhSN6xYDwLRUfzDkbvW",0,0'/>*/
                 }
-                {(savedQuizzes.length > 0) ? 
+                {/*{(savedQuizzes.length > 0) ? 
 					<div>
 						<br/>
 						<h2 className="font-semibold text-lg">{clusterData.name}'s Career Compass</h2>
 					</div>
 					:<></>}
-                <svg class="mindmap" width={900} height={500}/>
+                <svg class="mindmap" width={900} height={500}/>*/}
                 <br/>
                 {(savedQuizzes.length > 0) ? <h2 className="font-semibold text-lg">Results Explained (Click to Find Out More):</h2> : <></>}
                 <br/>
@@ -548,24 +570,40 @@ export default function Profile() {
             </> }
             <div>
                 <hr class="my-4"/>
+				{/*<CareersViaPath/>*/}
+				<br/>
                 {
                 (savedQuizzes.length > 0) ?
-                    <div>
-                        {
-                            savedQuizzes.map(q => 
-                                <div className="relative p-3 hover:bg-gray-200 rounded-md bg-gray-100 my-4 space-y-2 p-8">
-                                    <h3 className="text-md font-bold leading-5 pb-2">
-										Download Careers Page
-                                    </h3>
-                                    <a href={`/quizzes/${q.quizID}`} className='absolute inset-0 rounded-md focus:z-10 focus:outline-none focus:ring-2 ring-blue-400'/>
-                                    
-                                    <Button onClick={downloadFileDocument} size="small" variant="outlined" color="error">Download</Button>
-                                </div>
-                            )
-                        }
-                    </div> : <></>
+					<div className="relative p-3 hover:bg-gray-200 rounded-md bg-gray-100 my-4 space-y-2 p-8">
+						<h3 className="text-md font-bold leading-5 pb-2">
+							Download Careers Page
+						</h3>
+						<Button onClick={downloadFileDocument} size="small" variant="outlined" color="error">Download</Button>
+					</div>
+					: <></>
                 }
             </div>
+			<Joyride
+				callback={handleJoyrideCallback}
+				continuous={true}
+				run={run}
+				scrollToFirstStep={false}
+				showProgress={true}
+				showSkipButton={true}
+				steps={steps}
+				styles={{
+					options: {
+						zIndex: 10000,
+					}
+				}}
+				locale={{
+					back: 'Prev',
+					close: 'Close',
+					last: 'Finish',
+					next: 'Next',
+					skip: 'Skip'
+				}}
+			/>
         </div>  
     )
 }

@@ -169,17 +169,29 @@ const basicQuiz = {
       ]
     },
     {
-      "question": ("Do you like making things with your hands?"),
+      "question": ("On a scale of 1 to 5, how much do you like making things with your hands?"),
       "questionNumber": 8,
       "questionImg": "imageQ8",
       "answers": [
         {
-          "answer": "Yes",
+          "answer": "1",
+          "answerCluster": ["Business", "Finance"]
+        },
+        {
+          "answer": "2",
+          "answerCluster": ["Business", "Finance"]
+        },
+        {
+          "answer": "3",
           "answerCluster": ["Agriculture", "Architecture", "Public Safety", "Manufacturing"]
         },
         {
-          "answer": "No",
-          "answerCluster": ["Business", "Finance"]
+          "answer": "4",
+          "answerCluster": ["Agriculture", "Architecture", "Public Safety", "Manufacturing"]
+        },
+        {
+          "answer": "5",
+          "answerCluster": ["Agriculture", "Architecture", "Public Safety", "Manufacturing"]
         }
       ]
     },
@@ -248,17 +260,29 @@ const basicQuiz = {
       ]
     },
     {
-      "question": ("Do you like public speaking?"),
+      "question": ("On a scale of 1 to 5, how much do you like public speaking?"),
       "questionNumber": 13,
       "questionImg": "imageQ13",
       "answers": [
         {
-          "answer": "Yes",
+          "answer": "1",
+          "answerCluster": ["Manufacturing"]
+        },
+        {
+          "answer": "2",
+          "answerCluster": ["Manufacturing"]
+        },
+        {
+          "answer": "3",
           "answerCluster": ["Arts", "Public Safety"]
         },
         {
-          "answer": "No",
-          "answerCluster": ["Manufacturing"]
+          "answer": "4",
+          "answerCluster": ["Arts", "Public Safety"]
+        },
+        {
+          "answer": "5",
+          "answerCluster": ["Arts", "Public Safety"]
         }
       ]
     },
@@ -278,32 +302,56 @@ const basicQuiz = {
       ]
     },
     {
-      "question": ("In a team setting are you one to take the lead role?"),
+      "question": ("On a scale of 1 to 5, how likely are you to take the lead role in a team setting?"),
       "questionNumber": 15,
       "questionImg": "imageQ15",
       "answers": [
         {
-          "answer": "Yes",
+          "answer": "1",
+          "answerCluster": ["Human Services", "Health"]
+        },
+        {
+          "answer": "2",
+          "answerCluster": ["Human Services", "Health"]
+        },
+        {
+          "answer": "3",
           "answerCluster": ["Business", "Government", "Marketing"]
         },
         {
-          "answer": "No",
-          "answerCluster": ["Human Services", "Health"]
+          "answer": "4",
+          "answerCluster": ["Business", "Government", "Marketing"]
+        },
+        {
+          "answer": "5",
+          "answerCluster": ["Business", "Government", "Marketing"]
         }
       ]
     },
     {
-      "question": ("Do you like to teach others?"),
+      "question": ("On a scale of 1 to 5, how much do you like to teach others?"),
       "questionNumber": 16,
       "questionImg": "imageQ16",
       "answers": [
         {
-          "answer": "Yes",
+          "answer": "1",
+          "answerCluster": ["Transportation"]
+        },
+        {
+          "answer": "2",
+          "answerCluster": ["Transportation"]
+        },
+        {
+          "answer": "3",
           "answerCluster": ["Education"]
         },
         {
-          "answer": "No",
-          "answerCluster": ["Transportation"]
+          "answer": "4",
+          "answerCluster": ["Education"]
+        },
+        {
+          "answer": "5",
+          "answerCluster": ["Education"]
         }
       ]
     },
@@ -368,47 +416,83 @@ const basicQuiz = {
       ]
     },
     {
-      "question": ("Do you like writing?"),
+      "question": ("On a scale of 1 to 5, how much do you like writing?"),
       "questionNumber": 21,
       "questionImg": "imageQ21",
       "answers": [
         {
-          "answer": "Yes",
+          "answer": "1",
+          "answerCluster": ["Human Services"]
+        },
+        {
+          "answer": "2",
+          "answerCluster": ["Human Services"]
+        },
+        {
+          "answer": "3",
           "answerCluster": ["Government", "Education"]
         },
         {
-          "answer": "No",
-          "answerCluster": ["Human Services"]
+          "answer": "4",
+          "answerCluster": ["Government", "Education"]
+        },
+        {
+          "answer": "5",
+          "answerCluster": ["Government", "Education"]
         }
       ]
     },
     {
-      "question": ("Do you like to be in the spot light?"),
+      "question": ("On a scale of 1 to 5, how much do you like to be in the spot light?"),
       "questionNumber": 22,
       "questionImg": "imageQ22",
       "answers": [
         {
-          "answer": "Yes",
+          "answer": "1",
+          "answerCluster": []
+        },
+        {
+          "answer": "2",
+          "answerCluster": []
+        },
+        {
+          "answer": "3",
           "answerCluster": ["Arts", "Human Services"]
         },
         {
-          "answer": "No",
-          "answerCluster": []
+          "answer": "4",
+          "answerCluster": ["Arts", "Human Services"]
+        },
+        {
+          "answer": "5",
+          "answerCluster": ["Arts", "Human Services"]
         }
       ]
     },
     {
-      "question": ("Do you consider yourself a creative person?"),
+      "question": ("On a scale of 1 to 5, how creative do you consider yourself?"),
       "questionNumber": 23,
       "questionImg": "imageQ23",
       "answers": [
         {
-          "answer": "Yes",
+          "answer": "1",
+          "answerCluster": []
+        },
+        {
+          "answer": "2",
+          "answerCluster": []
+        },
+        {
+          "answer": "3",
           "answerCluster": ["Arts", "Business", "STEM"]
         },
         {
-          "answer": "No",
-          "answerCluster": []
+          "answer": "4",
+          "answerCluster": ["Arts", "Business", "STEM"]
+        },
+        {
+          "answer": "5",
+          "answerCluster": ["Arts", "Business", "STEM"]
         }
       ]
     }
